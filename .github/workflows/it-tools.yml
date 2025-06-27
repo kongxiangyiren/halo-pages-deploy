@@ -14,8 +14,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "it-tools/.nvmrc"
+          node-version: '.nvmrc'
           cache: pnpm
+        working-directory: it-tools
 
       - name: install
         run: pnpm install

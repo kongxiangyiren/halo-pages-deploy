@@ -1,0 +1,32 @@
+name: deploy
+on:
+  workflow_dispatch:
+jobs:
+  itTools:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: clone
+        run: git clone https://github.com/CorentinTh/it-tools
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ".nvmrc"
+
+      - name: install
+        run: pnpm install
+        working-directory: it-tools
+
+      - name: build
+        run: BASE_URL="/it-tools/" pnpm build
+        working-directory: it-tools
+
+      - name: deploy
+        run: npx halo-static-pages-deploy-cli deploy -e ${{ secrets.ENDPOINT }} -i project-dssnen3v -t ${{ secrets.PAT }} -f ./dist
+        working-directory: it-tools
+
+      - name: clean
+        run: rm -rf it-tools

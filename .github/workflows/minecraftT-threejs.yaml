@@ -1,0 +1,35 @@
+name: deploy
+on:
+  workflow_dispatch:
+jobs:
+  minecraftThreejs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: clone
+        run: git clone https://github.com/vyse12138/minecraft-threejs
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.15.0
+          registry-url: https://registry.npmmirror.com
+          cache: yarn
+          cache-dependency-path: minecraft-threejs/yarn.lock
+
+      - name: install
+        run: yarn install
+        working-directory: minecraft-threejs
+
+      - name: build
+        run: yarn build --base=/minecraft-threejs/
+        working-directory: minecraft-threejs
+
+      - name: deploy
+        run: npx halo-static-pages-deploy-cli deploy -e ${{ secrets.ENDPOINT }} -i project-tz6rnmvw -t ${{ secrets.PAT }} -f ./dist
+        working-directory: minecraft-threejs
+
+      - name: clean
+        run: rm -rf minecraft-threejs

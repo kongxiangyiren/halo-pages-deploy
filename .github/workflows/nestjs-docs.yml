@@ -1,0 +1,44 @@
+name: deploy
+on:
+  workflow_dispatch:
+jobs:
+  nestjsDocs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: clone
+        run: git clone https://github.com/nestcn/docs.nestjs.cn
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+        
+
+      - name: install
+        run: bun install
+        working-directory: docs.nestjs.cn
+
+      - name: BASE_URL
+        run: echo "import build from './rspress.config';build.base = '/nestjs-docs/';export default build;" > build.rspress.config.ts
+        working-directory: docs.nestjs.cn
+
+      - name: build
+        run: bun run build --config ./build.rspress.config.ts
+        working-directory: docs.nestjs.cn
+
+      - name: deploy
+        run: npx halo-static-pages-deploy-cli deploy -e ${{ secrets.ENDPOINT }} -i project-zkostirq -t ${{ secrets.PAT }} -f ./doc_build
+        working-directory: docs.nestjs.cn
+
+      - name: clean
+        run: rm -rf docs.nestjs.cn

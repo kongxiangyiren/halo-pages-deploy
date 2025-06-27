@@ -17,7 +17,7 @@ jobs:
           node-version: 22.15.0
           registry-url: https://registry.npmmirror.com
           cache: yarn
-        working-directory: minecraft-threejs
+          cache-dependency-path: 'minecraft-threejs/yarn.lock'
 
       - name: install
         run: yarn install

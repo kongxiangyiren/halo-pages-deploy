@@ -1,4 +1,4 @@
-name: deploy
+name: it-tools
 on:
   workflow_dispatch:
 jobs:

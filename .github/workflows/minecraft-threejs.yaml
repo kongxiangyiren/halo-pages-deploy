@@ -1,4 +1,4 @@
-name: deploy
+name: minecraft-threejs
 on:
   workflow_dispatch:
 jobs:

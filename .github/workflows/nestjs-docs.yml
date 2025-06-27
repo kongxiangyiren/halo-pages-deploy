@@ -1,4 +1,4 @@
-name: deploy
+name: docs.nestjs.cn
 on:
   workflow_dispatch:
 jobs:

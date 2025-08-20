@@ -2,7 +2,7 @@ name: vue-markdown-editor
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 0 1 * *'
+    - cron: '0 0 0 */15 * *'
 jobs:
   vue-markdown-editor:
     runs-on: ubuntu-latest

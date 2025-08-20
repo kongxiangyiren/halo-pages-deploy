@@ -1,6 +1,9 @@
 name: it-tools
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 0 1 * *'
+
 jobs:
   itTools:
     runs-on: ubuntu-latest

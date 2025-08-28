@@ -31,7 +31,7 @@ jobs:
         working-directory: docs.nestjs.cn
 
       - name: BASE_URL
-        run: echo "import build from './rspress.config';build.base = '/nestjs-docs/';export default build;" > build.rspress.config.ts
+        run: echo "import build from './rspress.config';build.base = '/nestjs-docs/'; build.ssg=false;export default build;" > build.rspress.config.ts
         working-directory: docs.nestjs.cn
 
       - name: build

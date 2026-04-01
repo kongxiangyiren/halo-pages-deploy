@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: clone
         run: git clone https://github.com/code-farmer-i/vue-markdown-editor -b gh-pages
